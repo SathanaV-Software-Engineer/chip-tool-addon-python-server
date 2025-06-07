@@ -1,0 +1,17 @@
+name: "CHIP Tool API"
+description: "Exposes chip-tool via a Flask API"
+version: "1.0.0"
+slug: chip_tool_api
+startup: services
+boot: auto
+host_network: true
+hassio_api: true
+hassio_role: admin
+privileged:
+  - SYS_ADMIN
+  - NET_ADMIN
+options: {}
+schema: {}
+map:
+  - config:rw
+  - share:rw
