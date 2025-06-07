@@ -13,6 +13,5 @@ arch:
   - amd64
   - aarch64
   - armv7
-image: null
 options: {}
 schema: {}
