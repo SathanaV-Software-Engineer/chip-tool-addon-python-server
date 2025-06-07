@@ -5,13 +5,14 @@ description: Expose Matter chip-tool via HTTP API
 startup: application
 boot: auto
 init: false
+host_network: true
 ports:
   6000/tcp: 6000
-host_network: true
 homeassistant: 2023.0.0
 arch:
   - amd64
   - aarch64
+  - armv7
 image: null
 options: {}
 schema: {}
