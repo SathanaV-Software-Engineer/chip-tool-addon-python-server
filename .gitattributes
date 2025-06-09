@@ -1,0 +1,1 @@
+chip_tool_api/connected_home_ip/** filter=lfs diff=lfs merge=lfs -text
