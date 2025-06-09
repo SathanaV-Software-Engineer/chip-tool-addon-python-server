@@ -1,34 +1,43 @@
-# Use a lightweight Python base image
-FROM python:3.11-slim
+FROM ubuntu:24.04
 
-# Install chip-tool dependencies (adjust as needed for your system)
+# Install dependencies
+# Install dependencies (includes python3-venv)
 RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-venv \
     git \
-    unzip \
-    libavahi-compat-libdnssd-dev \
     libssl-dev \
-    libstdc++6 \
-    avahi-daemon \
-    dbus \
+    libavahi-compat-libdnssd-dev \
     curl \
-    && apt-get clean
+    build-essential \
+    unzip \
+    iproute2 \
+    avahi-daemon \
+    libglib2.0-dev \
+    sudo \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
 
-# Copy app files
-COPY chip_tool_server.py /app/chip_tool_server.py
-COPY run.sh /app/run.sh
-COPY requirements.txt /app/requirements.txt
+# Copy your application code
+COPY connected_home_ip/ ./connected_home_ip/
+COPY run.sh /run.sh
 
-# Install Python requirements
-RUN pip install --no-cache-dir -r requirements.txt
+# Make the run script executable
+RUN chmod +x /run.sh
 
-# Make run.sh executable
-RUN chmod +x /app/run.sh
+# Create and activate virtualenv, install Python packages
+RUN python3 -m venv /opt/venv \
+    && . /opt/venv/bin/activate \
+    && pip install --no-cache-dir flask flask-cors
 
-# Expose API port
+# Use venv by default
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Expose Flask port
 EXPOSE 6000
 
-# Entry point
-ENTRYPOINT ["/app/run.sh"]
+# Run the run.sh script on container start
+CMD ["/run.sh"]

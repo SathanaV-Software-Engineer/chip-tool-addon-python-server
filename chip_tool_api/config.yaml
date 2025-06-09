@@ -1,7 +1,7 @@
 name: CHIP Tool API
 version: "1.0.0"
 slug: chip_tool_api
-description: Expose Matter chip-tool via HTTP API
+description: Expose Matter chip-tool via HTTP API new
 startup: application
 boot: auto
 init: false
